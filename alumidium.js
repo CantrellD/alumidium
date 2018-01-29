@@ -21,7 +21,7 @@ var alumidium = (function() {
         var runner = null; // Status byte. Used for Running Status.
 
         function ui32(arg) {
-            return utils.ui32(arg);
+            return arg >>> 0;
         }
 
         function parseVariableLengthValue() {
@@ -185,11 +185,11 @@ var alumidium = (function() {
         var index = 0;
 
         function ui32(arg) {
-            return utils.ui32(arg);
+            return ui32(arg);
         }
 
         function pushVariableLengthValue(value) {
-            var src = utils.ui32(value);
+            var src = ui32(value);
             var stack = [];
             assert(src === value);
             while (true) {
@@ -214,22 +214,22 @@ var alumidium = (function() {
 
             // chunk_size
             var chunk_size = 6;
-            arr.push(utils.ui32(chunk_size & 0xFF000000) >>> 24);
-            arr.push(utils.ui32(chunk_size & 0x00FF0000) >>> 16);
-            arr.push(utils.ui32(chunk_size & 0x0000FF00) >>> 8);
-            arr.push(utils.ui32(chunk_size & 0x000000FF) >>> 0);
+            arr.push(ui32(chunk_size & 0xFF000000) >>> 24);
+            arr.push(ui32(chunk_size & 0x00FF0000) >>> 16);
+            arr.push(ui32(chunk_size & 0x0000FF00) >>> 8);
+            arr.push(ui32(chunk_size & 0x000000FF) >>> 0);
 
             // format_type
-            arr.push(utils.ui32(obj.header.format_type >>> 8) & 0xFF);
-            arr.push(utils.ui32(obj.header.format_type >>> 0) & 0xFF);
+            arr.push(ui32(obj.header.format_type >>> 8) & 0xFF);
+            arr.push(ui32(obj.header.format_type >>> 0) & 0xFF);
 
             // number_of_tracks
-            arr.push(utils.ui32(obj.tracks.length >>> 8) & 0xFF);
-            arr.push(utils.ui32(obj.tracks.length >>> 0) & 0xFF);
+            arr.push(ui32(obj.tracks.length >>> 8) & 0xFF);
+            arr.push(ui32(obj.tracks.length >>> 0) & 0xFF);
 
             // time_division
-            arr.push(utils.ui32(obj.header.time_division >>> 8) & 0xFF);
-            arr.push(utils.ui32(obj.header.time_division >>> 0) & 0xFF);
+            arr.push(ui32(obj.header.time_division >>> 8) & 0xFF);
+            arr.push(ui32(obj.header.time_division >>> 0) & 0xFF);
 
             // tracks
             for (var i = 0; i < obj.tracks.length; i++) {
@@ -258,10 +258,10 @@ var alumidium = (function() {
                     arr.pop(); // TODO: This is stupid, so... Not this.
                 }
             }
-            arr.push(utils.ui32(chunk_size & 0xFF000000) >>> 24);
-            arr.push(utils.ui32(chunk_size & 0x00FF0000) >>> 16);
-            arr.push(utils.ui32(chunk_size & 0x0000FF00) >>> 8);
-            arr.push(utils.ui32(chunk_size & 0x000000FF) >>> 0);
+            arr.push(ui32(chunk_size & 0xFF000000) >>> 24);
+            arr.push(ui32(chunk_size & 0x00FF0000) >>> 16);
+            arr.push(ui32(chunk_size & 0x0000FF00) >>> 8);
+            arr.push(ui32(chunk_size & 0x000000FF) >>> 0);
 
             // events
             for (var i = 0; i < track.events.length; i++) {
